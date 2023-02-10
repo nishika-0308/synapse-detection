@@ -1,0 +1,34 @@
+#!/bin/tcsh -e
+#SBATCH --job-name=Synaptic-cleft-detection # Job name
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task 48 # 1 cpu on single node
+#SBATCH --mem=180gb # Job memory request
+#SBATCH --time=120:00:00 # Time limit hrs:min:sec
+#SBATCH --mail-type=BEGIN,END,FAIL. # Mail events (NONE, BEGIN, END, FAIL, ALL)
+#SBATCH --mail-user=guptanp@bc.edu  # Where to send mmail
+#SBATCH --partition=gpuv100
+
+#SBATCH --output=main_%j.out
+
+module purge
+module load anaconda
+module load slurm
+module load cuda11.2/blas/11.2.2
+
+conda activate py3_torch
+
+which python
+hostname
+python -c 'import torch; print(torch.version.cuda)'
+
+cd /mmfs1/data/guptani/pytorch_connectomics
+setenv PROTOCOL_BUFFERS_PYTHON_IMPLEMENTATION python
+setenv CUDA_VISIBLE_DEVICES 0,1,2,3
+
+python -u -m torch.distributed.run \
+ --nproc_per_node=4 --master_port=5679 scripts/main.py --distributed \
+ --config-base configs/JWR15/synapse/JWR15-Synapse-Base.yaml \
+ --config-file configs/JWR15/synapse/JWR15-Synapse-Semantic-CE.yaml \
+ --checkpoint ../../bccv/modelzoo/synapse/jwr_checkpoint_50k.pth.tar
+
