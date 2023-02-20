@@ -1,0 +1,35 @@
+{
+  "Comment": "Nag_P7_Cerebellum_em",
+  "ServerType": "imagetiles",
+
+  "SourceFileNameTemplate": "p7_blank_LI.png",
+  "SourceParamSequence": "ssrc",
+  "SourceMinS": 0,
+  "SourceMaxS": 49,
+  "SourceMinR": 1,
+  "SourceMaxR": 1,
+  "SourceMinC": 1,
+  "SourceMaxC": 1,
+
+  "MipMapFileNameTemplate": "p7_blank_LI.png",
+  "MipMapParamSequence": "mssrc",
+  "SourceMinM": 1,
+  "SourceMaxM": 1,
+
+  "SourceTileSizeX": 5420,
+  "SourceTileSizeY": 5870,
+  "SourceBytesPerPixel": 1,
+  "MissingImagePolicy": "white",
+
+  "TargetDataSizeX": 5420,
+  "TargetDataSizeY": 5870,
+  "TargetDataSizeZ": 50,
+  "OffsetX": 0,
+  "OffsetY": 0,
+  "OffsetZ": 0,
+  "OffsetMip": 0,
+  "TargetVoxelSizeXnm": 6,
+  "TargetVoxelSizeYnm": 6,
+  "TargetVoxelSizeZnm": 30,
+  "TargetLayerName": "Nag_P7_Cerebellum_em",
+}
