@@ -89,7 +89,7 @@ def writeH5(filename, dtarray, datasetname='main'):
     fid.close()
 
 
-sn = "../../datasets/nagP7/2000-2099/"
+sn = "../../datasets/nagP7/2000-2099/" #Folder Location of the images
 
 #filename_template
 #1500-1599-p7_s
