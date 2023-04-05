@@ -15,7 +15,7 @@ viewer=neuroglancer.Viewer()
 #    s.layers['segmentation'] = neuroglancer.SegmentationLayer(source='precomputed://gs://neuroglancer-janelia-flyem-hemibrain/v1.0/segmentation', selected_alpha=0.3)
 
 # SNEMI (# 3d vol dim: z,y,x)
-D0= './Right/test300/'
+D0= './Right/test300/' #Folder location of the inference results
 res = neuroglancer.CoordinateSpace(
         names=['z', 'y', 'x'],
         units=['nm', 'nm', 'nm'],
@@ -72,12 +72,16 @@ hf.create_dataset('main', data=gt)
 hf.close()
 print("label2 file has been created and its shape is ", gt.shape)
 
+#I am generating labels for half images because the cpu machine is not able to
+#take the load of the whole image at once. So, instead, I am concatenating the results
+#from both the halves 
+
 #imgplot = plt.imshow(im[32,:,:])
 #plt.show()
 #segplt = plt.imshow (gt)
 #plt.show()
 gt= np.concatenate((a,b)) #concatenating both gt's
-hf = h5py.File(D0+'label.h5', 'w')
+hf = h5py.File(D0+'label.h5', 'w') #This is the inference mask
 hf.create_dataset('main',data=gt)
 hf.close()
 def ngLayer(data,res,oo=[0,0,0],tt='segmentation'):
